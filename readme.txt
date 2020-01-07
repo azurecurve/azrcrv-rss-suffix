@@ -26,6 +26,10 @@ To install the RSS Feed plugin:
 
 == Changelog ==
 Changes and feature additions for the Icons plugin:
+= 1.0.1 =
+* Update azurecurve menu for easier maintenance.
+* Move require of azurecurve menu below security check.
+* Localization fixes.
 = 1.0.0 =
 * First version for ClassicPress forked from azurecurve RSS Suffix WordPress Plugin.
 
