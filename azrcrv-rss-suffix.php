@@ -3,7 +3,7 @@
  * ------------------------------------------------------------------------------
  * Plugin Name: RSS Suffix
  * Description: Provides opposite rss feed to that configured in ClassicPress
- * Version: 1.0.1
+ * Version: 1.1.0
  * Author: azurecurve
  * Author URI: https://development.azurecurve.co.uk/classicpress-plugins/
  * Plugin URI: https://development.azurecurve.co.uk/classicpress-plugins/rss-suffix
@@ -24,6 +24,10 @@ if (!defined('ABSPATH')){
 
 // include plugin menu
 require_once(dirname( __FILE__).'/pluginmenu/menu.php');
+register_activation_hook(__FILE__, 'azrcrv_create_plugin_menu_rsss');
+
+// include update client
+require_once(dirname(__FILE__).'/libraries/updateclient/UpdateClient.class.php');
 
 /**
  * Setup actions and filters.
@@ -36,6 +40,7 @@ add_action('admin_post_save_options', 'azrcrv_rsss_process_options');
 add_action('network_admin_edit_save_network_options', 'azrcrv_rsss_process_network_options');
 add_action('admin_menu', 'azrcrv_rsss_create_admin_menu');
 add_action('network_admin_menu', 'azrcrv_rsss_create_network_admin_menu');
+add_action('plugins_loaded', 'azrcrv_rsss_load_languages');
 
 // add filters
 add_filter('the_excerpt_rss', 'azrcrv_rsss_append_rss_suffix');
@@ -44,6 +49,17 @@ add_filter('plugin_action_links', 'azrcrv_rsss_add_plugin_action_link', 10, 2);
 
 // register activation hook
 register_activation_hook(__FILE__, 'azrcrv_rsss_set_default_options');
+
+/**
+ * Load language files.
+ *
+ * @since 1.0.0
+ *
+ */
+function azrcrv_rsss_load_languages() {
+    $plugin_rel_path = basename(dirname(__FILE__)).'/languages';
+    load_plugin_textdomain('azrcrv-rsss', false, $plugin_rel_path);
+}
 
 /**
  * initialise rss feed
@@ -200,7 +216,7 @@ function azrcrv_rsss_settings(){
 	?>
 	<div id="azrcrv-rss-general" class="wrap">
 		<fieldset>
-			<h2><?php echo esc_html(get_admin_page_title()); ?></h2>
+			<h1><?php echo esc_html(get_admin_page_title()); ?></h1>
 			<?php if(isset($_GET['settings-updated'])){ ?>
 				<div class="notice notice-success is-dismissible">
 					<p><strong><?php esc_html_e('Settings have been saved.', 'azrcrv-rsss'); ?></strong></p>
@@ -298,7 +314,7 @@ function azrcrv_rsss_network_settings(){
 	<div id="azrcrv-rss-general" class="wrap">
 		
 		<fieldset>
-			<h2><?php echo esc_html(get_admin_page_title()); ?></h2>
+			<h1><?php echo esc_html(get_admin_page_title()); ?></h1>
 			
 			<form method="post" action="admin-post.php">
 				<input type="hidden" name="action" value="save_network_options" />
