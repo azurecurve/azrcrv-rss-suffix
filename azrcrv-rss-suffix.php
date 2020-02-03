@@ -3,7 +3,7 @@
  * ------------------------------------------------------------------------------
  * Plugin Name: RSS Suffix
  * Description: Provides opposite rss feed to that configured in ClassicPress
- * Version: 1.1.0
+ * Version: 1.1.1
  * Author: azurecurve
  * Author URI: https://development.azurecurve.co.uk/classicpress-plugins/
  * Plugin URI: https://development.azurecurve.co.uk/classicpress-plugins/rss-suffix
@@ -58,7 +58,7 @@ register_activation_hook(__FILE__, 'azrcrv_rsss_set_default_options');
  */
 function azrcrv_rsss_load_languages() {
     $plugin_rel_path = basename(dirname(__FILE__)).'/languages';
-    load_plugin_textdomain('azrcrv-rsss', false, $plugin_rel_path);
+    load_plugin_textdomain('rss-suffix', false, $plugin_rel_path);
 }
 
 /**
