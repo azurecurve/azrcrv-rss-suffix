@@ -3,7 +3,7 @@
  * ------------------------------------------------------------------------------
  * Plugin Name: RSS Suffix
  * Description: Provides opposite rss feed to that configured in ClassicPress
- * Version: 1.1.3
+ * Version: 1.1.4
  * Author: azurecurve
  * Author URI: https://development.azurecurve.co.uk/classicpress-plugins/
  * Plugin URI: https://development.azurecurve.co.uk/classicpress-plugins/rss-suffix/
@@ -24,7 +24,7 @@ if (!defined('ABSPATH')){
 
 // include plugin menu
 require_once(dirname( __FILE__).'/pluginmenu/menu.php');
-register_activation_hook(__FILE__, 'azrcrv_create_plugin_menu_rsss');
+add_action('admin_init', 'azrcrv_create_plugin_menu_rsss');
 
 // include update client
 require_once(dirname(__FILE__).'/libraries/updateclient/UpdateClient.class.php');
@@ -36,6 +36,7 @@ require_once(dirname(__FILE__).'/libraries/updateclient/UpdateClient.class.php')
  *
  */
 // add actions
+add_action('admin_init', 'azrcrv_rsss_set_default_options');
 add_action('admin_post_save_options', 'azrcrv_rsss_process_options');
 add_action('network_admin_edit_save_network_options', 'azrcrv_rsss_process_network_options');
 add_action('admin_menu', 'azrcrv_rsss_create_admin_menu');
@@ -46,9 +47,6 @@ add_action('plugins_loaded', 'azrcrv_rsss_load_languages');
 add_filter('the_excerpt_rss', 'azrcrv_rsss_append_rss_suffix');
 add_filter('the_content', 'azrcrv_rsss_append_rss_suffix');
 add_filter('plugin_action_links', 'azrcrv_rsss_add_plugin_action_link', 10, 2);
-
-// register activation hook
-register_activation_hook(__FILE__, 'azrcrv_rsss_set_default_options');
 
 /**
  * Load language files.
@@ -108,7 +106,8 @@ function azrcrv_rsss_set_default_options($networkwide){
 	$old_option_name = 'azc-rsss-settings';
 	
 	$new_options = array(
-				'rss_suffix' => '<p>Read original post <a href=\'$post_url\'>$post_title</a> at <a href=\'$site_url\'>$site_title|$site_tagline</a></p>'
+						'rss_suffix' => '<p>Read original post <a href=\'$post_url\'>$post_title</a> at <a href=\'$site_url\'>$site_title|$site_tagline</a></p>',
+						'updated' => strtotime('2020-04-04'),
 			);
 	
 	// set defaults for multi-site
@@ -149,27 +148,26 @@ function azrcrv_rsss_set_default_options($networkwide){
 function azrcrv_rsss_update_options($option_name, $new_options, $is_network_site, $old_option_name){
 	if ($is_network_site == true){
 		if (get_site_option($option_name) === false){
-			if (get_site_option($old_option_name) === false){
-				add_site_option($option_name, $new_options);
-			}else{
-				add_site_option($option_name, azrcrv_rsss_update_default_options($new_options, get_site_option($old_option_name)));
-			}
+			add_site_option($option_name, $new_options);
 		}else{
-			update_site_option($option_name, azrcrv_rsss_update_default_options($new_options, get_site_option($option_name)));
+			$options = get_site_option($option_name);
+			if (!isset($options['updated']) OR $options['updated'] < $new_options['updated'] ){
+				$options['updated'] = $new_options['updated'];
+				update_site_option($option_name, azrcrv_rsss_update_default_options($options, $new_options));
+			}
 		}
 	}else{
 		if (get_option($option_name) === false){
-			if (get_option($old_option_name) === false){
-				add_option($option_name, $new_options);
-			}else{
-				add_option($option_name, azrcrv_rsss_update_default_options($new_options, get_option($old_option_name)));
-			}
+			add_option($option_name, $new_options);
 		}else{
-			update_option($option_name, azrcrv_rsss_update_default_options($new_options, get_option($option_name)));
+			$options = get_option($option_name);
+			if (!isset($options['updated']) OR $options['updated'] < $new_options['updated'] ){
+				$options['updated'] = $new_options['updated'];
+				update_option($option_name, azrcrv_rsss_update_default_options($options, $new_options));
+			}
 		}
 	}
 }
-
 
 /**
  * Add default options to existing options.
@@ -182,10 +180,10 @@ function azrcrv_rsss_update_default_options( &$default_options, $current_options
     $current_options = (array) $current_options;
     $updated_options = $current_options;
     foreach ($default_options as $key => &$value) {
-        if (is_array( $value) && isset( $updated_options[$key ])){
+        if (is_array( $value) && isset( $updated_options[$key])){
             $updated_options[$key] = azrcrv_rsss_update_default_options($value, $updated_options[$key]);
         } else {
-            $updated_options[$key] = $value;
+			$updated_options[$key] = $value;
         }
     }
     return $updated_options;
@@ -269,7 +267,7 @@ function azrcrv_rsss_settings(){
 					<li>$site_url</li>
 					<li>$post_url</li>
 					<li>$post_title</li></ol>
-					<?php esc_html_e('For example: <em>Read original post %1$s at %2$s', "&lt;a href='$post_url'&gt;$post_title&lt;/a&gt;", "&lt;a href='$site_url'&gt;$site_title|$site_tagline&lt;/a&gt;", 'rss-suffix'); ?></em>
+					<?php printf(esc_html('For example: %sRead original post %s at %s%s'), '<em>', '&lt;a href="$post_url"&gt;$post_title&lt;/a&gt;', '&lt;a href="$site_url"&gt;$site_title|$site_tagline&lt;/a&gt;', '</em>', 'rss-suffix'); ?></em>
 					</p>
 				</td></tr>
 				</table>
