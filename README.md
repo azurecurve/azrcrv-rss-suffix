@@ -1,4 +1,2 @@
 # azrcrv-rss-suffix
-RSS Suffix plugin for ClassicPress
-
-Full plugin details available at [azurecurve Development](https://development.azurecurve.co.uk/classicpress-plugins/rss-suffix/)
+[RSS Suffix plugin for ClassicPress](https://development.azurecurve.co.uk/classicpress-plugins/rss-suffix/)

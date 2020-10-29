@@ -3,7 +3,7 @@
  * ------------------------------------------------------------------------------
  * Plugin Name: RSS Suffix
  * Description: Provides opposite rss feed to that configured in ClassicPress
- * Version: 1.1.4
+ * Version: 1.2.0
  * Author: azurecurve
  * Author URI: https://development.azurecurve.co.uk/classicpress-plugins/
  * Plugin URI: https://development.azurecurve.co.uk/classicpress-plugins/rss-suffix/
@@ -36,7 +36,6 @@ require_once(dirname(__FILE__).'/libraries/updateclient/UpdateClient.class.php')
  *
  */
 // add actions
-add_action('admin_init', 'azrcrv_rsss_set_default_options');
 add_action('admin_post_save_options', 'azrcrv_rsss_process_options');
 add_action('network_admin_edit_save_network_options', 'azrcrv_rsss_process_network_options');
 add_action('admin_menu', 'azrcrv_rsss_create_admin_menu');
@@ -47,6 +46,8 @@ add_action('plugins_loaded', 'azrcrv_rsss_load_languages');
 add_filter('the_excerpt_rss', 'azrcrv_rsss_append_rss_suffix');
 add_filter('the_content', 'azrcrv_rsss_append_rss_suffix');
 add_filter('plugin_action_links', 'azrcrv_rsss_add_plugin_action_link', 10, 2);
+add_filter('codepotent_update_manager_image_path', 'azrcrv_rsss_custom_image_path');
+add_filter('codepotent_update_manager_image_url', 'azrcrv_rsss_custom_image_url');
 
 /**
  * Load language files.
@@ -69,7 +70,7 @@ function azrcrv_rsss_append_rss_suffix($content){
 	global $post;
 	
 	if(is_feed()){
-		$options = get_option('azrcrv-rss');
+		$options = azrcrv_rsss_get_option('azrcrv-rss');
 		
 		$rss_suffix = '';
 		if (strlen($options['rss_suffix']) > 0){
@@ -95,98 +96,49 @@ function azrcrv_rsss_append_rss_suffix($content){
 }
 
 /**
- * Set default options
+ * Custom plugin image path.
  *
- * @since 1.0.0
- *
- */
-function azrcrv_rsss_set_default_options($networkwide){
-	
-	$option_name = 'azrcrv-rss';
-	$old_option_name = 'azc-rsss-settings';
-	
-	$new_options = array(
-						'rss_suffix' => '<p>Read original post <a href=\'$post_url\'>$post_title</a> at <a href=\'$site_url\'>$site_title|$site_tagline</a></p>',
-						'updated' => strtotime('2020-04-04'),
-			);
-	
-	// set defaults for multi-site
-	if (function_exists('is_multisite') && is_multisite()){
-		// check if it is a network activation - if so, run the activation function for each blog id
-		if ($networkwide){
-			global $wpdb;
-
-			$blog_ids = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
-			$original_blog_id = get_current_blog_id();
-
-			foreach ($blog_ids as $blog_id){
-				switch_to_blog($blog_id);
-				
-				azrcrv_rsss_update_options($option_name, $new_options, false, $old_option_name);
-			}
-
-			switch_to_blog($original_blog_id);
-		}else{
-			azrcrv_rsss_update_options( $option_name, $new_options, false, $old_option_name);
-		}
-		if (get_site_option($option_name) === false){
-			azrcrv_rsss_update_options($option_name, $new_options, true, $old_option_name);
-		}
-	}
-	//set defaults for single site
-	else{
-		azrcrv_rsss_update_options($option_name, $new_options, false, $old_option_name);
-	}
-}
-
-/**
- * Update options.
- *
- * @since 1.1.3
+ * @since 1.2.0
  *
  */
-function azrcrv_rsss_update_options($option_name, $new_options, $is_network_site, $old_option_name){
-	if ($is_network_site == true){
-		if (get_site_option($option_name) === false){
-			add_site_option($option_name, $new_options);
-		}else{
-			$options = get_site_option($option_name);
-			if (!isset($options['updated']) OR $options['updated'] < $new_options['updated'] ){
-				$options['updated'] = $new_options['updated'];
-				update_site_option($option_name, azrcrv_rsss_update_default_options($options, $new_options));
-			}
-		}
-	}else{
-		if (get_option($option_name) === false){
-			add_option($option_name, $new_options);
-		}else{
-			$options = get_option($option_name);
-			if (!isset($options['updated']) OR $options['updated'] < $new_options['updated'] ){
-				$options['updated'] = $new_options['updated'];
-				update_option($option_name, azrcrv_rsss_update_default_options($options, $new_options));
-			}
-		}
-	}
-}
-
-/**
- * Add default options to existing options.
- *
- * @since 1.1.3
- *
- */
-function azrcrv_rsss_update_default_options( &$default_options, $current_options ) {
-    $default_options = (array) $default_options;
-    $current_options = (array) $current_options;
-    $updated_options = $current_options;
-    foreach ($default_options as $key => &$value) {
-        if (is_array( $value) && isset( $updated_options[$key])){
-            $updated_options[$key] = azrcrv_rsss_update_default_options($value, $updated_options[$key]);
-        } else {
-			$updated_options[$key] = $value;
-        }
+function azrcrv_rsss_custom_image_path($path){
+    if (strpos($path, 'azrcrv-rss-suffix') !== false){
+        $path = plugin_dir_path(__FILE__).'assets/pluginimages';
     }
-    return $updated_options;
+    return $path;
+}
+
+/**
+ * Custom plugin image url.
+ *
+ * @since 1.2.0
+ *
+ */
+function azrcrv_rsss_custom_image_url($url){
+    if (strpos($url, 'azrcrv-rss-suffix') !== false){
+        $url = plugin_dir_url(__FILE__).'assets/pluginimages';
+    }
+    return $url;
+}
+
+/**
+ * Get options including defaults.
+ *
+ * @since 1.2.0
+ *
+ */
+function azrcrv_rsss_get_option($option_name){
+ 
+	$defaults = array(
+						'rss_suffix' => '<p>Read original post <a href=\'$post_url\'>$post_title</a> at <a href=\'$site_url\'>$site_title|$site_tagline</a></p>',
+					);
+
+	$options = get_option($option_name, $defaults);
+
+	$options = wp_parse_args($options, $defaults);
+
+	return $options;
+
 }
 
 /**
@@ -203,7 +155,7 @@ function azrcrv_rsss_add_plugin_action_link($links, $file){
 	}
 
 	if ($file == $this_plugin){
-		$settings_link = '<a href="'.get_bloginfo('wpurl').'/wp-admin/admin.php?page=azrcrv-rsss"><img src="'.plugins_url('/pluginmenu/images/Favicon-16x16.png', __FILE__).'" style="padding-top: 2px; margin-right: -5px; height: 16px; width: 16px;" alt="azurecurve" />'.esc_html__('Settings' ,'rss-suffix').'</a>';
+		$settings_link = '<a href="'.admin_url('admin.php?page=azrcrv-rsss').'"><img src="'.plugins_url('/pluginmenu/images/Favicon-16x16.png', __FILE__).'" style="padding-top: 2px; margin-right: -5px; height: 16px; width: 16px;" alt="azurecurve" />'.esc_html__('Settings' ,'rss-suffix').'</a>';
 		array_unshift($links, $settings_link);
 	}
 
@@ -239,7 +191,7 @@ function azrcrv_rsss_settings(){
 	}
 	
 	// Retrieve plugin configuration options from database
-	$options = get_option('azrcrv-rss');
+	$options = azrcrv_rsss_get_option('azrcrv-rss');
 	?>
 	<div id="azrcrv-rss-general" class="wrap">
 		<fieldset>
