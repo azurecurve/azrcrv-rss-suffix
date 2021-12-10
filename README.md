@@ -1,8 +1,6 @@
 # [RSS Suffix](https://development.azurecurve.co.uk/classicpress-plugins/rss-suffix/)
 ![Plugin Banner](/assets/pluginimages/banner-1544x500.png)
 
-== Description ==
-
 # Description
 
 Appends a suffix (such as a copyright notice or link back) to the RSS feed.
