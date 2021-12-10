@@ -1,12 +1,12 @@
 === RSS Suffix ===
 
 Description:	Appends a suffix (such as a copyright notice or link back) to the RSS feed.
-Version:		1.2.1
+Version:		1.2.2
 Tags:			rss, feed
 Author:			azurecurve
 Author URI:		https://development.azurecurve.co.uk/
 Plugin URI:		https://development.azurecurve.co.uk/classicpress-plugins/rss-suffix/
-Download link:	https://github.com/azurecurve/azrcrv-rss-suffix/releases/download/v1.2.1/azrcrv-rss-suffix.zip
+Download link:	https://github.com/azurecurve/azrcrv-rss-suffix/releases/download/v1.2.2/azrcrv-rss-suffix.zip
 Donate link:	https://development.azurecurve.co.uk/support-development/
 Requires PHP:	5.6
 Requires:		1.0.0
@@ -30,7 +30,7 @@ This plugin is multi-site compatible; set defaults at the network level which ca
 
 # Installation Instructions
 
- * Download the plugin from [GitHub](https://github.com/azurecurve/azrcrv-rss-suffix/releases/latest/).
+ * Download the latest release of the plugin from [GitHub](https://github.com/azurecurve/azrcrv-rss-suffix/releases/latest/).
  * Upload the entire zip file using the Plugins upload function in your ClassicPress admin panel.
  * Activate the plugin.
  * Configure relevant settings via the configuration page in the admin control panel (azurecurve menu).
@@ -40,7 +40,7 @@ This plugin is multi-site compatible; set defaults at the network level which ca
 # Frequently Asked Questions
 
 ### Can I translate this plugin?
-Yes, the .pot fie is in the plugins languages folder and can also be downloaded from the plugin page on https://development.azurecurve.co.uk; if you do translate this plugin, please sent the .po and .mo files to translations@azurecurve.co.uk for inclusion in the next version (full credit will be given).
+Yes, the .pot file is in the plugins languages folder; if you do translate this plugin, please sent the .po and .mo files to translations@azurecurve.co.uk for inclusion in the next version (full credit will be given).
 
 ### Is this plugin compatible with both WordPress and ClassicPress?
 This plugin is developed for ClassicPress, but will likely work on WordPress.
@@ -48,6 +48,10 @@ This plugin is developed for ClassicPress, but will likely work on WordPress.
 == Changelog ==
 
 # Changelog
+
+### [Version 1.2.2](https://github.com/azurecurve/azrcrv-rss-suffix/releases/tag/v1.2.2)
+ * Update azurecurve menu.
+ * Update readme files.
 
 ### [Version 1.2.1](https://github.com/azurecurve/azrcrv-rss-suffix/releases/tag/v1.2.1)
  * Update azurecurve menu and logo.
@@ -94,12 +98,16 @@ This plugin is developed for ClassicPress, but will likely work on WordPress.
 
 # About azurecurve
 
-**azurecurve** was one of the first plugin developers to start developing for Classicpress; all plugins are available from [azurecurve Development](https://development.azurecurve.co.uk/) and are integrated with the [Update Manager plugin](https://codepotent.com/classicpress/plugins/update-manager/) by [CodePotent](https://codepotent.com/) for fully integrated, no hassle, updates.
+**azurecurve** was one of the first plugin developers to start developing for Classicpress; all plugins are available from [azurecurve Development](https://development.azurecurve.co.uk/) and are integrated with the [Update Manager plugin](https://directory.classicpress.net/plugins/update-manager) for fully integrated, no hassle, updates.
 
-Some of the top plugins available from **azurecurve** are:
-* [Add Twitter Cards](https://development.azurecurve.co.uk/classicpress-plugins/add-twitter-cards/)
-* [Breadcrumbs](https://development.azurecurve.co.uk/classicpress-plugins/breadcrumbs/)
-* [Series Index](https://development.azurecurve.co.uk/classicpress-plugins/series-index/)
-* [To Twitter](https://development.azurecurve.co.uk/classicpress-plugins/to-twitter/)
-* [Theme Switcher](https://development.azurecurve.co.uk/classicpress-plugins/theme-switcher/)
-* [Toggle Show/Hide](https://development.azurecurve.co.uk/classicpress-plugins/toggle-showhide/)
+Some of the other plugins available from **azurecurve** are:
+ * Add Twitter Cards - [details](https://development.azurecurve.co.uk/classicpress-plugins/add-twitter-cards/) / [download](https://github.com/azurecurve/azrcrv-add-twitter-cards/releases/latest/)
+ * Disable FLoC - [details](https://development.azurecurve.co.uk/classicpress-plugins/disable-floc/) / [download](https://github.com/azurecurve/azrcrv-disable-floc/releases/latest/)
+ * Estimated Read Time - [details](https://development.azurecurve.co.uk/classicpress-plugins/estimated-read-time/) / [download](https://github.com/azurecurve/azrcrv-estimated-read-time/releases/latest/)
+ * Icons - [details](https://development.azurecurve.co.uk/classicpress-plugins/icons/) / [download](https://github.com/azurecurve/azrcrv-icons/releases/latest/)
+ * Images - [details](https://development.azurecurve.co.uk/classicpress-plugins/images/) / [download](https://github.com/azurecurve/azrcrv-images/releases/latest/)
+ * Nearby - [details](https://development.azurecurve.co.uk/classicpress-plugins/nearby/) / [download](https://github.com/azurecurve/azrcrv-nearby/releases/latest/)
+ * Page Index - [details](https://development.azurecurve.co.uk/classicpress-plugins/page-index/) / [download](https://github.com/azurecurve/azrcrv-page-index/releases/latest/)
+ * Shortcodes in Widgets - [details](https://development.azurecurve.co.uk/classicpress-plugins/shortcodes-in-widgets/) / [download](https://github.com/azurecurve/azrcrv-shortcodes-in-widgets/releases/latest/)
+ * Sidebar Login - [details](https://development.azurecurve.co.uk/classicpress-plugins/sidebar-login/) / [download](https://github.com/azurecurve/azrcrv-sidebar-login/releases/latest/)
+ * Username Protection - [details](https://development.azurecurve.co.uk/classicpress-plugins/username-protection/) / [download](https://github.com/azurecurve/azrcrv-username-protection/releases/latest/)
