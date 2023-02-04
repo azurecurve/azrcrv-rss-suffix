@@ -1,12 +1,12 @@
 === RSS Suffix ===
 
 Description:	Appends a suffix (such as a copyright notice or link back) to the RSS feed.
-Version:		1.2.3
+Version:		1.2.4
 Tags:			rss, feed
 Author:			azurecurve
 Author URI:		https://development.azurecurve.co.uk/
 Plugin URI:		https://development.azurecurve.co.uk/classicpress-plugins/rss-suffix/
-Download link:	https://github.com/azurecurve/azrcrv-rss-suffix/releases/download/v1.2.3/azrcrv-rss-suffix.zip
+Download link:	https://github.com/azurecurve/azrcrv-rss-suffix/releases/download/v1.2.4/azrcrv-rss-suffix.zip
 Donate link:	https://development.azurecurve.co.uk/support-development/
 Requires PHP:	5.6
 Requires:		1.0.0
@@ -49,6 +49,9 @@ This plugin is developed for ClassicPress, but will likely work on WordPress.
 
 # Changelog
 
+### [Version 1.2.4](https://github.com/azurecurve/azrcrv-rss-suffix/releases/tag/v1.2.4)
+ * Update readme file for compatibility with ClassicPress Directory.
+ 
 ### [Version 1.2.3](https://github.com/azurecurve/azrcrv-rss-suffix/releases/tag/v1.2.3)
  * Update readme files.
  * Update language template.
