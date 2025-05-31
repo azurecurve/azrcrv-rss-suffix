@@ -3,8 +3,9 @@
  * ------------------------------------------------------------------------------
  * Plugin Name:		RSS Suffix
  * Description:		Provides opposite rss feed to that configured in ClassicPress
- * Version:			1.2.5
+ * Version:			1.2.6
  * Requires CP:		1.0
+ * Requires PHP:	7.4
  * Author:			azurecurve
  * Author URI:		https://development.azurecurve.co.uk/classicpress-plugins/
  * Plugin URI:		https://development.azurecurve.co.uk/classicpress-plugins/rss-suffix/
